@@ -47,9 +47,15 @@ function setup(){
     bird2 = new Bird(150,170);
     bird3 = new Bird(100,170);
     bird4 = new Bird(50,170);
-birds=[bird,bird2,bird3,bird4];
-    //log6 = new Log(230,180,80, PI/2);
-    slingshot = new SlingShot(birds[birds.length-1],{x:200, y:50});
+
+    birds.push(bird4);
+    birds.push(bird3);
+    birds.push(bird2);
+    birds.push(bird);
+
+    slingshot = new SlingShot(birds[birds.length-1].body,{x:200, y:50});
+   
+   
 }
 
 function draw(){
@@ -85,11 +91,8 @@ function draw(){
     bird3.display();
     bird4.display();
     
-    birds.push(bird4);
-    birds.push(bird3);
-    birds.push(bird2);
-    birds.push(bird);
-
+ 
+ 
     platform.display();
     //log6.display();
     slingshot.display();    
@@ -99,7 +102,9 @@ function mouseDragged(){
     if (gameState!=="launched"){
         Matter.Body.setPosition(birds[birds.length-1].body, {x: mouseX , y: mouseY});
         Matter.Body.applyForce(birds[birds.length-1].body,birds[birds.length-1].body.position,{x:5,y:-5});
+        return false;
     }
+  
 }
 
 
@@ -115,6 +120,7 @@ function keyPressed(){
     if(keyCode === 32 && gameState ==="launched"){
         
         if(birds.length>=0){
+     
             Matter.Body.setPosition(birds[birds.length-1].body,{x:200,y:50});
             slingshot.attach(birds[birds.length-1].body);
             gameState = "onSling";
